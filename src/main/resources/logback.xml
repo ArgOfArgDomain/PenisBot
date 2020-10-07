@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <property name="logMessagePattern" value="%date [%thread] %-5level %logger{36} - %msg%n"/>
+
+    <!-- Log to console. -->
+    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${logMessagePattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Log to file, with file rotation and cleanup. -->
+    <appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/penisbot.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>archived/penisbot.log_%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
+
+            <!-- each archived file, size max 10MB -->
+            <maxFileSize>10MB</maxFileSize>
+
+            <!-- Total size of all archive files, if total size > 5GB, it will delete old archived file -->
+            <totalSizeCap>5GB</totalSizeCap>
+
+            <!-- 30 days to keep -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${logMessagePattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Log info and above for our code to console. -->
+    <!-- TODO: change to info. -->
+    <logger name="penisbot" level="debug" additivity="false">
+        <appender-ref ref="consoleAppender"/>
+    </logger>
+
+    <!-- Log debug and above for our code to file. -->
+    <logger name="penisbot" level="debug" additivity="false">
+        <appender-ref ref="fileAppender"/>
+    </logger>
+
+    <!-- Log error and above for anything (our code and external code) to console -->
+    <root level="error">
+        <appender-ref ref="consoleAppender"/>
+        <appender-ref ref="fileAppender"/>
+    </root>
+
+</configuration>

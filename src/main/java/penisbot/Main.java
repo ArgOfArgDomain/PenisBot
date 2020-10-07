@@ -3,13 +3,27 @@
  */
 package penisbot;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import penisbot.configuration.Configuration;
+import penisbot.configuration.ConfigurationException;
+
 public class Main {
 
-    public String getGreeting() {
-        return "Hello world.";
-    }
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+
 
     public static void main(String[] args) {
-        System.out.println(new Main().getGreeting());
+        try {
+            // Load configuration
+            Configuration configuration = new Configuration();
+            configuration.populateFromEnv();
+
+
+
+        } catch (ConfigurationException e) {
+            logger.error("Fatal error occured.", e);
+            System.exit(1);
+        }
     }
 }
