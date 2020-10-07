@@ -21,16 +21,25 @@ public class Configuration {
     @ConfigurationParameter(environmentKey="PENISBOT_SERVER_PORT")
     private Integer serverPort = 6667;
 
+    @ConfigurationParameter(environmentKey="PENISBOT_SERVER_USERNAME")
+    private String serverUsername = null;
+
+    @ConfigurationParameter(environmentKey="PENISBOT_SERVER_PASSWORD")
+    private String serverPassword = null;
+
     @ConfigurationParameter(environmentKey="PENISBOT_NICKNAME")
     private String nickname = "Pen1sBot";
+
+    @ConfigurationParameter(environmentKey="PENISBOT_LOGIN_NAME")
+    private String loginName = "Pen1sBot";
 
     @ConfigurationParameter(environmentKey="PENISBOT_NICKSERV_USER")
     private String nickservUser = null;
 
-    @ConfigurationParameter(environmentKey="PENISBOT_NICKSERV_PASSWORD", sensitive = true)
+    @ConfigurationParameter(environmentKey="PENISBOT_NICKSERV_PASSWORD", sensitive=true)
     private String nickservPassword = null;
 
-    @ConfigurationParameter(environmentKey="PENISBOT_ADMIN_PASSWORD", sensitive = true)
+    @ConfigurationParameter(environmentKey="PENISBOT_ADMIN_PASSWORD", sensitive=true)
     private String adminPassword = "penis";
 
     public Configuration() {
@@ -38,9 +47,16 @@ public class Configuration {
     }
 
     public void populateFromEnv() throws ConfigurationException {
+        // Grab environment
+        Map<String, String> environment = System.getenv();
+
+        // Populate
+        populateFromEnv(environment);
+    }
+
+    public void populateFromEnv(Map<String, String> environment) throws ConfigurationException {
+
         try {
-            // Grab environment
-            Map<String, String> environment = System.getenv();
 
             // Go through fields with the ConfigurationParameter annotation
             Collection<Field> fields = getConfigurationParameterFields();
@@ -69,9 +85,10 @@ public class Configuration {
                             // Set value
                             setMethod.invoke(this, field.getType().cast(valueOfMethod.invoke(field.getType(), stringValue)));
                         }
-                        logger.info("Set " + field.getName() + "=" + ( configurationParameterAnnotation.sensitive() ? "***" : field.get(this).toString()) );
                     }
                 }
+
+                logger.info("Set " + field.getName() + "=" + ( configurationParameterAnnotation.sensitive() ? "***" : String.valueOf(field.get(this))));
             }
 
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | IntrospectionException e) {
@@ -140,5 +157,33 @@ public class Configuration {
 
     public void setAdminPassword(String adminPassword) {
         this.adminPassword = adminPassword;
+    }
+
+    public void setServerPort(Integer serverPort) {
+        this.serverPort = serverPort;
+    }
+
+    public String getServerUsername() {
+        return serverUsername;
+    }
+
+    public void setServerUsername(String serverUsername) {
+        this.serverUsername = serverUsername;
+    }
+
+    public String getServerPassword() {
+        return serverPassword;
+    }
+
+    public void setServerPassword(String serverPassword) {
+        this.serverPassword = serverPassword;
+    }
+
+    public String getLoginName() {
+        return loginName;
+    }
+
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
     }
 }

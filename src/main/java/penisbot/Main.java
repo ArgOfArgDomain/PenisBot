@@ -19,7 +19,11 @@ public class Main {
             Configuration configuration = new Configuration();
             configuration.populateFromEnv();
 
+            // Create our bot
+            Bot bot = new Bot(configuration);
 
+            // Start it up
+            bot.start();
 
         } catch (ConfigurationException e) {
             logger.error("Fatal error occured.", e);
