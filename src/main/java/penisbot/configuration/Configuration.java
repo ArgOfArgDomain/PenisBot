@@ -69,7 +69,7 @@ public class Configuration {
                             // Set value
                             setMethod.invoke(this, field.getType().cast(valueOfMethod.invoke(field.getType(), stringValue)));
                         }
-                        logger.info("Set " + field.getName() + "=" + field.get(this).toString());
+                        logger.info("Set " + field.getName() + "=" + ( configurationParameterAnnotation.sensitive() ? "***" : field.get(this).toString()) );
                     }
                 }
             }
