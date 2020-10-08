@@ -6,7 +6,7 @@ import java.util.Collection;
 public class User {
 
     private String nickname;
-    private ArrayList<String> channels;
+    private final ArrayList<String> channels = new ArrayList<>();
     private boolean admin;
 
     public User(String nickname) {

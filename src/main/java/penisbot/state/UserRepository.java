@@ -90,4 +90,7 @@ public class UserRepository {
         }
     }
 
+    public synchronized boolean hasUser(String nickname) {
+        return getUser(nickname) != null;
+    }
 }

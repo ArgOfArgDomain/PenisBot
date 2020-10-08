@@ -1,10 +1,10 @@
 package penisbot.configuration;
 
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.util.HashMap;
 
-import static org.junit.Assert.*;
 
 public class ConfigurationTest {
 

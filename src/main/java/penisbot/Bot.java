@@ -149,7 +149,7 @@ public class Bot extends PircBot {
 
     private void handleUserLeavingChannel(String channel, String nickname) {
         // Was this us?
-        if (nickname == getName()) {
+        if (nickname.equalsIgnoreCase(getName())) {
             // Remove everyone from this channel, as we no longer know about what
             // is going on in there.
             userRepository.removeChannel(channel);

@@ -1,4 +1,4 @@
-package penisbot.configuration;
+package penisbot.configuration.annotation;
 
 import java.lang.annotation.*;
 
