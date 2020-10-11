@@ -3,7 +3,7 @@ package penisbot.state;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class UserRepositoryTest {
+public class UserRepositoryEntryRepositoryTest {
 
     @Test
     public void userAddedToRepository() {
@@ -177,13 +177,13 @@ public class UserRepositoryTest {
         assertTrue (userRepository.getUser("testuser").getChannels().contains("testchannel"));
 
         // Get our user under current nick
-        User user = userRepository.getUser("testuser");
+        UserRepositoryEntry userRepositoryEntry = userRepository.getUser("testuser");
 
         // User changes nick
         userRepository.renameUser("testuser", "testuser2");
 
         // Validate
-        assertEquals("testuser2", user.getNickname());
+        assertEquals("testuser2", userRepositoryEntry.getNickname());
         assertTrue(userRepository.hasUser("testuser2"));
         assertFalse(userRepository.hasUser("testuser"));
         assertTrue (userRepository.getUser("testuser2").getChannels().contains("testchannel"));

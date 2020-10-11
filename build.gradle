@@ -16,10 +16,11 @@ dependencies {
     // Glorious IRC framework. Not updated since 2011 but still a thing apparently!
     implementation group: 'pircbot', name: 'pircbot', version: '1.5.0'
 
-    implementation 'com.google.guava:guava:28.2-jre'
+    implementation group: 'com.google.guava', name: 'guava', version: '28.2-jre'
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
+    implementation group: 'org.reflections', name: 'reflections', version: '0.9.11'
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
 }
 
 application {

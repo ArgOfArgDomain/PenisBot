@@ -3,13 +3,13 @@ package penisbot.state;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class User {
+public class UserRepositoryEntry {
 
     private String nickname;
     private final ArrayList<String> channels = new ArrayList<>();
     private boolean admin;
 
-    public User(String nickname) {
+    public UserRepositoryEntry(String nickname) {
         this.nickname = nickname;
     }
 

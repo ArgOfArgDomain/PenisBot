@@ -25,7 +25,7 @@ public class Configuration {
     @ConfigurationParameter(environmentKey="PENISBOT_SERVER_USERNAME")
     private String serverUsername = null;
 
-    @ConfigurationParameter(environmentKey="PENISBOT_SERVER_PASSWORD")
+    @ConfigurationParameter(environmentKey="PENISBOT_SERVER_PASSWORD", sensitive=true)
     private String serverPassword = null;
 
     @ConfigurationParameter(environmentKey="PENISBOT_NICKNAME")
@@ -34,14 +34,11 @@ public class Configuration {
     @ConfigurationParameter(environmentKey="PENISBOT_LOGIN_NAME")
     private String loginName = "Pen1sBot";
 
-    @ConfigurationParameter(environmentKey="PENISBOT_NICKSERV_USER")
-    private String nickservUser = null;
-
-    @ConfigurationParameter(environmentKey="PENISBOT_NICKSERV_PASSWORD", sensitive=true)
-    private String nickservPassword = null;
-
     @ConfigurationParameter(environmentKey="PENISBOT_ADMIN_PASSWORD", sensitive=true)
     private String adminPassword = "penis";
+
+    @ConfigurationParameter(environmentKey="PENISBOT_COMMAND_PREFIX")
+    private String commandPrefix = "!";
 
     public Configuration() {
 
@@ -124,14 +121,6 @@ public class Configuration {
         return nickname;
     }
 
-    public String getNickservUser() {
-        return nickservUser;
-    }
-
-    public String getNickservPassword() {
-        return nickservPassword;
-    }
-
     public String getAdminPassword() {
         return adminPassword;
     }
@@ -146,14 +135,6 @@ public class Configuration {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
-    }
-
-    public void setNickservUser(String nickservUser) {
-        this.nickservUser = nickservUser;
-    }
-
-    public void setNickservPassword(String nickservPassword) {
-        this.nickservPassword = nickservPassword;
     }
 
     public void setAdminPassword(String adminPassword) {
@@ -186,5 +167,13 @@ public class Configuration {
 
     public void setLoginName(String loginName) {
         this.loginName = loginName;
+    }
+
+    public String getCommandPrefix() {
+        return commandPrefix;
+    }
+
+    public void setCommandPrefix(String commandPrefix) {
+        this.commandPrefix = commandPrefix;
     }
 }

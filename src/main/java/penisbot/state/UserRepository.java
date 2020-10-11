@@ -12,7 +12,7 @@ public class UserRepository {
     // Our collection of users
     // We could have various maps to nickname and channel to make lookups faster, but given
     // the small size, just iterating through each time is probably not a big deal.
-    private final ArrayList<User> users = new ArrayList<>();
+    private final ArrayList<UserRepositoryEntry> userRepositoryEntries = new ArrayList<>();
 
     public UserRepository() {
 
@@ -20,33 +20,33 @@ public class UserRepository {
 
     public synchronized void clearAll() {
         logger.debug("Clearing all users from repository");
-        users.clear();
+        userRepositoryEntries.clear();
     }
 
     public synchronized void removeChannel(String channelName) {
         logger.debug("Removing " + channelName + " from all users in repository");
 
         // Remove channel
-        for (User user : users) {
-            user.removeChannel(channelName);
+        for (UserRepositoryEntry userRepositoryEntry : userRepositoryEntries) {
+            userRepositoryEntry.removeChannel(channelName);
         }
 
         // Prune any users no longer in any channels
-        users.removeIf(user -> user.getChannels().size() == 0);
+        userRepositoryEntries.removeIf(userRepositoryEntry -> userRepositoryEntry.getChannels().size() == 0);
     }
 
     public synchronized void removeUserFromChannel(String nickname, String channelName) {
         logger.debug("Removing " + channelName + " from user " + nickname + " in repository");
 
         // Grab user
-        User user = getUser(nickname);
-        if (user != null) {
+        UserRepositoryEntry userRepositoryEntry = getUser(nickname);
+        if (userRepositoryEntry != null) {
             // Remove channel from user
-            user.removeChannel(channelName);
+            userRepositoryEntry.removeChannel(channelName);
 
             // Remove user if no longer in any channels we know about
-            if (user.getChannels().size() == 0) {
-                users.remove(user);
+            if (userRepositoryEntry.getChannels().size() == 0) {
+                userRepositoryEntries.remove(userRepositoryEntry);
             }
         }
     }
@@ -54,13 +54,13 @@ public class UserRepository {
     public synchronized void removeUser(String nickname) {
         logger.debug("Removing user " + nickname + " in repository");
 
-        users.removeIf(user -> user.getNickname().equalsIgnoreCase(nickname));
+        userRepositoryEntries.removeIf(userRepositoryEntry -> userRepositoryEntry.getNickname().equalsIgnoreCase(nickname));
     }
 
-    public synchronized User getUser(String nickname) {
-        for (User user : users) {
-            if (user.getNickname().equalsIgnoreCase(nickname)) {
-                return user;
+    public synchronized UserRepositoryEntry getUser(String nickname) {
+        for (UserRepositoryEntry userRepositoryEntry : userRepositoryEntries) {
+            if (userRepositoryEntry.getNickname().equalsIgnoreCase(nickname)) {
+                return userRepositoryEntry;
             }
         }
         return null;
@@ -70,23 +70,23 @@ public class UserRepository {
         logger.debug("Upserting user " + nickname + " in channel " + channel + " in repository");
 
         // Add user if doesn't exist
-        User user = getUser(nickname);
-        if (user == null) {
-            user = new User(nickname);
-            users.add(user);
+        UserRepositoryEntry userRepositoryEntry = getUser(nickname);
+        if (userRepositoryEntry == null) {
+            userRepositoryEntry = new UserRepositoryEntry(nickname);
+            userRepositoryEntries.add(userRepositoryEntry);
         }
 
         // Add channel
-        user.addChannel(channel);
+        userRepositoryEntry.addChannel(channel);
     }
 
     public synchronized void renameUser(String oldNickname, String newNickname) {
         logger.debug("Renaming user " + oldNickname + " to " + newNickname + " in repository");
 
         // Grab our user
-        User user = getUser(oldNickname);
-        if (user != null) {
-            user.setNickname(newNickname);
+        UserRepositoryEntry userRepositoryEntry = getUser(oldNickname);
+        if (userRepositoryEntry != null) {
+            userRepositoryEntry.setNickname(newNickname);
         }
     }
 

@@ -1,9 +1,6 @@
 package penisbot.command;
 
-import penisbot.command.argument.ArgumentSpecificationException;
-import penisbot.command.argument.ArgumentsSpecification;
-import penisbot.command.argument.FlagArgumentSpecification;
-import penisbot.command.argument.PositionalArgumentSpecification;
+import penisbot.command.argument.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -77,7 +74,15 @@ public class CommandSpecification {
         argumentsSpecification.addPositionalArgument(positionalArgumentSpecification);
     }
 
+    public void addPositionalArgument(String name, String description, PositionalArgumentMultiplicity multiplicity) throws ArgumentSpecificationException {
+        argumentsSpecification.addPositionalArgument(new PositionalArgumentSpecification(name, description, multiplicity));
+    }
+
     public void addFlagArgument(FlagArgumentSpecification flagArgumentSpecification) throws ArgumentSpecificationException {
         argumentsSpecification.addFlagArgument(flagArgumentSpecification);
+    }
+
+    public ArgumentsSpecification getArgumentsSpecification() {
+        return argumentsSpecification;
     }
 }

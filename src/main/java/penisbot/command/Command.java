@@ -1,36 +1,37 @@
 package penisbot.command;
 
-import penisbot.state.User;
+import penisbot.command.argument.ParsedArguments;
+import penisbot.state.UserRepositoryEntry;
 
 import java.util.List;
 
 public class Command {
 
     private final CommandSpecification commandSpecification;
-    private final User user;
+    private final String sender;
     private final String target;
-    private final List<String> arguments;
+    private final ParsedArguments parsedArguments;
 
-    public Command(CommandSpecification commandSpecification, User user, String target, List<String> arguments) {
+    public Command(CommandSpecification commandSpecification, String sender, String target, ParsedArguments parsedArguments) {
         this.commandSpecification = commandSpecification;
-        this.user = user;
+        this.sender = sender;
         this.target = target;
-        this.arguments = arguments;
+        this.parsedArguments = parsedArguments;
     }
 
     public CommandSpecification getCommandSpecification() {
         return commandSpecification;
     }
 
-    public User getUser() {
-        return user;
-    }
-
     public String getTarget() {
         return target;
     }
 
-    public List<String> getArguments() {
-        return arguments;
+    public ParsedArguments getParsedArguments() {
+        return parsedArguments;
+    }
+
+    public String getSender() {
+        return sender;
     }
 }

@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import penisbot.configuration.Configuration;
 import penisbot.configuration.ConfigurationException;
+import penisbot.module.ModuleInitializationException;
 
 public class Main {
 
@@ -25,8 +26,8 @@ public class Main {
             // Start it up
             bot.start();
 
-        } catch (ConfigurationException e) {
-            logger.error("Fatal error occured.", e);
+        } catch (ConfigurationException | ModuleInitializationException e) {
+            logger.error("Fatal error occurred.", e);
             System.exit(1);
         }
     }
